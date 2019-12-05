@@ -123,33 +123,53 @@ int main(int argc, char** argv)
     double (*C)[nj][nl]; C = (double(*)[nj][nl])malloc ((nj) * (nl) * sizeof(double));
     double (*D)[ni][nl]; D = (double(*)[ni][nl])malloc ((ni) * (nl) * sizeof(double));
 
-    init_array (ni, nj, nk, nl, &alpha, &beta,
-                *A,
-                *B,
-                *C,
-                *D);
+
 
     int nums[6] = {2, 4, 8, 16, 32, 64};
-    for (int i = 0; i < 6; i++) {
-        NUM_THREADS = nums[i];
+    int nis[5] = {16, 40, 180, 800, 1600};
+    int njs[5] = {18, 50, 190, 900, 1800};
+    int nks[5] = {22, 70, 210, 1100, 2200};
+    int nls[5] = {24, 80, 220, 1200, 2400};
+    char *names[5] = {"MINI", "SMALL", "MEDIUM", "LARGE", "EXTRALARGE"};
 
-        //bench_timer_start();
-        double start = omp_get_wtime();
-        kernel_2mm (ni, nj, nk, nl,
-                    alpha, beta,
-                    *tmp,
+    for (int t = 0; t < 5; t++) {
+        ni = nis[t];
+        nk = nks[t];
+        nj = njs[t];
+        nl = nls[t];
+
+        printf("ni = %d, nk = %d, nj = %d, nl = %d\n%s_DATASET:\n\n", ni, nk, nj, nl, names[t]);
+
+        init_array (ni, nj, nk, nl, &alpha, &beta,
                     *A,
                     *B,
                     *C,
                     *D);
 
-        //bench_timer_stop();
-        double end = omp_get_wtime();
-        printf("Number of threads = %d\n", NUM_THREADS);
-        //bench_timer_print();
-        printf("Time = %.6f", end - start);
+        for (int i = 0; i < 6; i++) {
+            NUM_THREADS = nums[i];
+
+            //bench_timer_start();
+            double start = omp_get_wtime();
+            kernel_2mm (ni, nj, nk, nl,
+                        alpha, beta,
+                        *tmp,
+                        *A,
+                        *B,
+                        *C,
+                        *D);
+
+            //bench_timer_stop();
+            double end = omp_get_wtime();
+            printf("Number of threads = %d\n", NUM_THREADS);
+            //bench_timer_print();
+            printf("Time = %.6f", end - start);
+            printf("\n");
+        }
         printf("\n");
     }
+
+
 
 
     if (argc > 42 && ! strcmp(argv[0], "")) print_array(ni, nl, *D);

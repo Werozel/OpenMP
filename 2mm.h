@@ -4,12 +4,6 @@
 #define LARGE_DATASET
 # endif
 # if !defined(NI) && !defined(NJ) && !defined(NK) && !defined(NL)
-# ifdef MY_DATASET
-#define NI 2
-#define NJ 3
-#define NK 2
-#define NL 2
-# endif
 # ifdef MINI_DATASET
 #define NI 16
 #define NJ 18
