@@ -107,9 +107,6 @@ void kernel_2mm(int ni, int nj, int nk, int nl,
 int main(int argc, char** argv)
 {
 
-    /*printf("Number of threads: ");
-    scanf("%d", &NUM_THREADS);*/
-
     int ni = NI;
     int nj = NJ;
     int nk = NK;
@@ -117,13 +114,6 @@ int main(int argc, char** argv)
 
     double alpha;
     double beta;
-    double (*tmp)[ni][nj]; tmp = (double(*)[ni][nj])malloc ((ni) * (nj) * sizeof(double));
-    double (*A)[ni][nk]; A = (double(*)[ni][nk])malloc ((ni) * (nk) * sizeof(double));
-    double (*B)[nk][nj]; B = (double(*)[nk][nj])malloc ((nk) * (nj) * sizeof(double));
-    double (*C)[nj][nl]; C = (double(*)[nj][nl])malloc ((nj) * (nl) * sizeof(double));
-    double (*D)[ni][nl]; D = (double(*)[ni][nl])malloc ((ni) * (nl) * sizeof(double));
-
-
 
     int nums[6] = {2, 4, 8, 16, 32, 64};
     int nis[5] = {16, 40, 180, 800, 1600};
@@ -138,7 +128,14 @@ int main(int argc, char** argv)
         nj = njs[t];
         nl = nls[t];
 
+        printf("----------------NEW DATASET----------------");
         printf("ni = %d, nk = %d, nj = %d, nl = %d\n%s_DATASET:\n\n", ni, nk, nj, nl, names[t]);
+
+        double (*tmp)[ni][nj]; tmp = (double(*)[ni][nj])malloc ((ni) * (nj) * sizeof(double));
+        double (*A)[ni][nk]; A = (double(*)[ni][nk])malloc ((ni) * (nk) * sizeof(double));
+        double (*B)[nk][nj]; B = (double(*)[nk][nj])malloc ((nk) * (nj) * sizeof(double));
+        double (*C)[nj][nl]; C = (double(*)[nj][nl])malloc ((nj) * (nl) * sizeof(double));
+        double (*D)[ni][nl]; D = (double(*)[ni][nl])malloc ((ni) * (nl) * sizeof(double));
 
         init_array (ni, nj, nk, nl, &alpha, &beta,
                     *A,
@@ -166,19 +163,15 @@ int main(int argc, char** argv)
             printf("Time = %.6f", end - start);
             printf("\n");
         }
+
+        free((void*)tmp);
+        free((void*)A);
+        free((void*)B);
+        free((void*)C);
+        free((void*)D);
+
         printf("\n");
     }
-
-
-
-
-    if (argc > 42 && ! strcmp(argv[0], "")) print_array(ni, nl, *D);
-
-    free((void*)tmp);
-    free((void*)A);
-    free((void*)B);
-    free((void*)C);
-    free((void*)D);
 
     return 0;
 }
