@@ -94,7 +94,7 @@ void kernel_2mm(int ni, int nj, int nk, int nl,
         }
     #pragma omp barrier
     omp_set_num_threads(NUM_THREADS);
-    #pragma omp parallel for num_threads(16)
+    #pragma omp parallel for
     for (int i = 0; i < ni; i++)
         for (int j = 0; j < nl; j++)
         {
