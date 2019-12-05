@@ -128,7 +128,7 @@ int main(int argc, char** argv)
         nj = njs[t];
         nl = nls[t];
 
-        printf("----------------NEW DATASET----------------");
+        printf("----------------NEW DATASET----------------\n");
         printf("ni = %d, nk = %d, nj = %d, nl = %d\n%s_DATASET:\n\n", ni, nk, nj, nl, names[t]);
 
         double (*tmp)[ni][nj]; tmp = (double(*)[ni][nj])malloc ((ni) * (nj) * sizeof(double));
