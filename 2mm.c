@@ -115,7 +115,7 @@ int main(int argc, char** argv)
     double alpha;
     double beta;
 
-    int nums[6] = {2, 4, 8, 16, 32, 64};
+    int nums[8] = {1, 2, 4, 8, 16, 32, 64, 128};
     int nis[5] = {16, 40, 180, 800, 1600};
     int njs[5] = {18, 50, 190, 900, 1800};
     int nks[5] = {22, 70, 210, 1100, 2200};
@@ -143,7 +143,7 @@ int main(int argc, char** argv)
                     *C,
                     *D);
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 8; i++) {
             NUM_THREADS = nums[i];
 
             //bench_timer_start();
